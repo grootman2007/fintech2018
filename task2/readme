@@ -1,0 +1,6 @@
+Версию JDK  - openjdk 10.0.2 2018-07-17
+
+Чтобы запустить генерацию, нужно сделать следущие шаги:
+1) попасть в папку fintech2018/task2/src/main/java
+2) javac myFirstClass.java 
+3) java myFirstClass
