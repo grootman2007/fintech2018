@@ -34,9 +34,6 @@ public class PdfCreater {
             }
         }
 
-
-
-
         try {
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
@@ -46,11 +43,9 @@ public class PdfCreater {
             PdfPTable table = new PdfPTable(14);
             addTableHeader(table);
 
-
             int randomCount = 0;
             Random randomGenerator = new Random();
             randomCount = randomGenerator.nextInt(29) + 1;
-
 
             for (int i = 0; i < randomCount; i++) {
                 PersonInfo person = new PersonInfo ();
@@ -61,12 +56,8 @@ public class PdfCreater {
             document.add(table);
             document.close();
 
-
-            //document.add(chunk);
-            //document.close();
             System.out.println("Файл создан. Путь: " + file.getAbsolutePath());
-        }
-        catch (com.itextpdf.text.DocumentException e) {
+        } catch (com.itextpdf.text.DocumentException e) {
             System.out.println("Error " + e.getMessage());
         }
     }
@@ -78,7 +69,9 @@ public class PdfCreater {
             BaseFont bf = BaseFont.createFont("fonts/PTS55F.ttf", BaseFont.IDENTITY_H , BaseFont.EMBEDDED);
             rusFont = new Font(bf, 14 );
 
-            Stream.of("Имя", "Фамилия", "Отчество", "Возраст", "Пол", "Дата рождения", "Инн", "Почтовый индекс", "Страна", "область", "город", "улица", "дом", "квартира")
+            Stream.of("Имя", "Фамилия", "Отчество", "Возраст",
+                        "Пол", "Дата рождения", "Инн", "Почтовый индекс",
+                        "Страна", "область", "город", "улица", "дом", "квартира")
                     .forEach(columnTitle -> {
                         PdfPCell header = new PdfPCell();
                         header.setBackgroundColor(BaseColor.LIGHT_GRAY);
@@ -103,14 +96,11 @@ public class PdfCreater {
 
             table.addCell(new Phrase(person.patronymic, rusFont));
 
-
             LocalDate nowDate = LocalDate.now();
 
             Period diff = Period.between(LocalDate.of(person.date.getYear()+1900,person.date.getMonth()+1,person.date.getDay()+1), nowDate);
 
-
             table.addCell(new Phrase(Integer.toString (diff.getYears()) , rusFont));
-
 
             table.addCell(new Phrase(person.sex, rusFont));
 
