@@ -8,52 +8,46 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Random;
 
 
 
 public class XlsxCreater {
-    public static void main(String[] args) throws IOException {
+    private String __fileName;
+    private Workbook __book;
+    private Sheet __sheet;
 
-        String fileName;
-        fileName = "out/sss.xlsx";
+    public XlsxCreater(String fileName){
+        __fileName = fileName;
+        __book = new HSSFWorkbook();
+    }
 
-        File file = new File(fileName);
+    public void createSheet(String sheetName){
+        __sheet = __book.createSheet(sheetName);
+    }
+
+    public void saveBook() throws IOException {
+        File file = new File(__fileName);
         if (!file.exists()) {
             if (file.getParentFile().mkdirs()) {
                 System.out.println("Directory is created!");
             }
         }
-
-        int randomCount = 0;
-        Random randomGenerator = new Random();
-        randomCount = randomGenerator.nextInt(29) + 1;
-
-        Workbook book = new HSSFWorkbook();
-        Sheet sheet;
-        sheet = book.createSheet("Birthdays");
-
-        for (int i = 0; i < randomCount; i++) {
-            PersonInfo person = new PersonInfo ();
-            Row row = sheet.createRow(i);
-            writeLineIntoExcel (person, row, book);
-
-        }
-
         for (int i = 0; i < 13; i++) {
-            sheet.autoSizeColumn(i);
+            __sheet.autoSizeColumn(i);
         }
 
-        book.write(new FileOutputStream(fileName));
-        book.close();
+        __book.write(new FileOutputStream(__fileName));
+        __book.close();
 
         System.out.println("Файл создан. Путь: " + file.getAbsolutePath());
 
     }
 
 
-    private static void writeLineIntoExcel(PersonInfo person, Row row, Workbook book) throws FileNotFoundException, IOException{
+    public void writeLineIntoExcel(PersonInfo person, int rowIterator) throws FileNotFoundException, IOException{
         int cell_i;
+        Row row = __sheet.createRow(rowIterator);
+
         cell_i = 0;
 
         Cell name = row.createCell(cell_i);
@@ -71,7 +65,8 @@ public class XlsxCreater {
 
         LocalDate nowDate = LocalDate.now();
 
-        Period diff = Period.between(LocalDate.of(person.date.getYear()+1900,person.date.getMonth()+1,person.date.getDay()+1), nowDate);
+        Period diff = Period.between(LocalDate.of(person.date.getYear()+1900,
+                person.date.getMonth()+1,person.date.getDay()+1), nowDate);
 
 
         Cell age = row.createCell(cell_i);
@@ -85,8 +80,8 @@ public class XlsxCreater {
 
         Cell birthdate = row.createCell(cell_i);
         cell_i++;
-        DataFormat format = book.createDataFormat();
-        CellStyle dateStyle = book.createCellStyle();
+        DataFormat format = __book.createDataFormat();
+        CellStyle dateStyle = __book.createCellStyle();
         dateStyle.setDataFormat(format.getFormat("dd-mm-yyyy"));
         birthdate.setCellStyle(dateStyle);
         birthdate.setCellValue(person.date);

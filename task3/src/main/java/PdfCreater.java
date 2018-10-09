@@ -4,127 +4,109 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.apache.poi.ss.usermodel.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Random;
 import java.util.stream.Stream;
 
 
 public class PdfCreater {
-    public static void main(String[] args) throws IOException {
+    private String __fileName;
+    private Document __document;
+    private PdfPTable __table;
+    private Font __rusFont;
 
-        String fileName;
-        fileName = "out/sss.pdf";
+    public PdfCreater (String fileName) throws IOException, com.itextpdf.text.DocumentException {
+        __fileName = fileName;
+        __document = new Document();
 
-        File file = new File(fileName);
+        File file = new File(__fileName);
         if (!file.exists()) {
             if (file.getParentFile().mkdirs()) {
                 System.out.println("Directory is created!");
             }
         }
 
-        try {
-            Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream(fileName));
+        PdfWriter.getInstance(__document, new FileOutputStream(__fileName));
 
-            document.open();
+        __document.open();
 
-            PdfPTable table = new PdfPTable(14);
-            addTableHeader(table);
+        BaseFont bf = BaseFont.createFont("fonts/PTS55F.ttf", BaseFont.IDENTITY_H , BaseFont.EMBEDDED);
+        __rusFont = new Font(bf, 5 );
 
-            int randomCount = 0;
-            Random randomGenerator = new Random();
-            randomCount = randomGenerator.nextInt(29) + 1;
+    }
 
-            for (int i = 0; i < randomCount; i++) {
-                PersonInfo person = new PersonInfo ();
-                addRows(table, person);
+    public void createTable (){
+        __table = new PdfPTable(14);
 
-            }
+    }
 
-            document.add(table);
-            document.close();
+    public void addTable ()throws com.itextpdf.text.DocumentException{
+        __document.add(__table);
+    }
 
-            System.out.println("Файл создан. Путь: " + file.getAbsolutePath());
-        } catch (com.itextpdf.text.DocumentException e) {
-            System.out.println("Error " + e.getMessage());
-        }
+    public void savePdf() {
+        __document.close();
+        File file = new File(__fileName);
+
+        System.out.println("Файл создан. Путь: " + file.getAbsolutePath());
+
     }
 
 
-    private static void addTableHeader(PdfPTable table) {
-        try{
-            Font rusFont;
-            BaseFont bf = BaseFont.createFont("fonts/PTS55F.ttf", BaseFont.IDENTITY_H , BaseFont.EMBEDDED);
-            rusFont = new Font(bf, 14 );
+    public void addTableHeader() {
+        Stream.of("Имя", "Фамилия", "Отчество", "Возраст",
+                    "Пол", "Дата рождения", "Инн", "Почтовый индекс",
+                    "Страна", "область", "город", "улица", "дом", "квартира")
+                .forEach(columnTitle -> {
+                    PdfPCell header = new PdfPCell();
+                    header.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                    header.setBorderWidth(1);
+                    header.setPhrase(new Phrase(columnTitle, __rusFont));
+                    __table.addCell(header);
+                });
 
-            Stream.of("Имя", "Фамилия", "Отчество", "Возраст",
-                        "Пол", "Дата рождения", "Инн", "Почтовый индекс",
-                        "Страна", "область", "город", "улица", "дом", "квартира")
-                    .forEach(columnTitle -> {
-                        PdfPCell header = new PdfPCell();
-                        header.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                        header.setBorderWidth(1);
-                        header.setPhrase(new Phrase(columnTitle, rusFont));
-                        table.addCell(header);
-                    });
-
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
     }
 
-    private static void addRows(PdfPTable table, PersonInfo person) {
-        try{
-            Font rusFont;
-            BaseFont bf = BaseFont.createFont("fonts/PTS55F.ttf", BaseFont.IDENTITY_H , BaseFont.EMBEDDED);
-            rusFont = new Font(bf, 14 );
-            table.addCell(new Phrase(person.name, rusFont));
+    public void addRow (PersonInfo person) {
+        __table.addCell(new Phrase(person.name, __rusFont));
 
-            table.addCell(new Phrase(person.fname, rusFont));
+        __table.addCell(new Phrase(person.fname, __rusFont));
 
-            table.addCell(new Phrase(person.patronymic, rusFont));
+        __table.addCell(new Phrase(person.patronymic, __rusFont));
 
-            LocalDate nowDate = LocalDate.now();
+        LocalDate nowDate = LocalDate.now();
 
-            Period diff = Period.between(LocalDate.of(person.date.getYear()+1900,person.date.getMonth()+1,person.date.getDay()+1), nowDate);
+        Period diff = Period.between(LocalDate.of(person.date.getYear()+1900,
+                person.date.getMonth()+1,person.date.getDay()+1), nowDate);
 
-            table.addCell(new Phrase(Integer.toString (diff.getYears()) , rusFont));
+        __table.addCell(new Phrase(Integer.toString (diff.getYears()) , __rusFont));
 
-            table.addCell(new Phrase(person.sex, rusFont));
+        __table.addCell(new Phrase(person.sex, __rusFont));
 
-            Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-            table.addCell(new Phrase(formatter.format(person.date), rusFont));
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        __table.addCell(new Phrase(formatter.format(person.date), __rusFont));
 
-            table.addCell(new Phrase(person.inn, rusFont));
+        __table.addCell(new Phrase(person.inn, __rusFont));
 
-            table.addCell(new Phrase(Integer.toString(person.index), rusFont));
+        __table.addCell(new Phrase(Integer.toString(person.index), __rusFont));
 
-            table.addCell(new Phrase(person.country, rusFont));
+        __table.addCell(new Phrase(person.country, __rusFont));
 
-            table.addCell(new Phrase(person.region, rusFont));
+        __table.addCell(new Phrase(person.region, __rusFont));
 
-            table.addCell(new Phrase(person.city, rusFont));
+        __table.addCell(new Phrase(person.city, __rusFont));
 
-            table.addCell(new Phrase(person.street, rusFont));
+        __table.addCell(new Phrase(person.street, __rusFont));
 
-            table.addCell(new Phrase(Integer.toString(person.house), rusFont));
+        __table.addCell(new Phrase(Integer.toString(person.house), __rusFont));
 
-            table.addCell(new Phrase(Integer.toString(person.apartment), rusFont));
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
+        __table.addCell(new Phrase(Integer.toString(person.apartment), __rusFont));
 
     }
 
