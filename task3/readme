@@ -1,11 +1,7 @@
 Версию JDK  - openjdk 10.0.2 2018-07-17
 
-Чтобы запустить генерацию XLSX, нужно сделать следущие шаги:
+Чтобы запустить генерацию XLSX и PDF, нужно сделать следущие шаги:
 1) попасть в папку fintech2018/task3/src/main/java
-2) javac XlsxCreater.java
-3) java XlsxCreater
+2) javac TestFileCreater.java
+3) java TestFileCreater
 
-Чтобы запустить генерацию PDF, нужно сделать следущие шаги:
-1) попасть в папку fintech2018/task3/src/main/java
-2) javac PdfCreater.java
-3) java PdfCreater
