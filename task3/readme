@@ -5,3 +5,27 @@
 2) javac TestFileCreater.java
 3) java TestFileCreater
 
+create database fintech
+CREATE USER 'fintech'@'localhost' IDENTIFIED BY '123456';
+GRANT ALL PRIVILEGES ON `fintech`.* TO 'fintech'@'localhost';
+FLUSH PRIVILEGES;
+
+CREATE TABLE `testInfo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fname` varchar(100) NOT NULL,
+  `lname` varchar(100) NOT NULL,
+  `patronymic` varchar(100) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `street` varchar(100) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `date` date NOT NULL,
+  `postcode` varchar(100) NOT NULL,
+  `house` int(11) NOT NULL,
+  `apartment` int(11) NOT NULL,
+  `phone` varchar(100) NOT NULL,
+  `login` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `userpic` varchar(100) NOT NULL,
+  `color` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

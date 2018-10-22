@@ -117,7 +117,7 @@ class PersonInfo {
         setCountry ();
         setDate();
         setInn ();
-        System.out.println("ssssssssssssssssssssssssssssss");
+
     }
 
     private void setSex () {

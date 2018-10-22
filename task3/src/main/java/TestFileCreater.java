@@ -26,6 +26,7 @@ public class TestFileCreater {
             personInfos = new ApiTestInfo().GetPersonInfo(randomCount);
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            personInfos = new Mysql().GetPersonInfo(randomCount);
         }
         int count = 0;
         for (Iterator<PersonInfo> i = personInfos.iterator(); i.hasNext();){

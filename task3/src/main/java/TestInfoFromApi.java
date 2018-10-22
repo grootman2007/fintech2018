@@ -56,4 +56,18 @@ public class TestInfoFromApi {
     public TestInfoFromApi () throws IOException {
 
     }
+    public TestInfoFromApi (String fname, String lname, String patronymic, String city, String street,
+                            String gender, Date date, String postcode, int house, int apartment) {
+        this.fname = fname;
+        this.lname = lname;
+        this.patronymic = patronymic;
+        this.city = city;
+        this.street = street;
+        this.gender = gender;
+        this.date = date;
+        this.postcode = postcode;
+        this.house = house;
+        this.apartment = apartment;
+
+    }
 }
