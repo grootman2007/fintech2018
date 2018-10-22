@@ -24,6 +24,7 @@ public class TestFileCreater {
         ArrayList<PersonInfo> personInfos = new ArrayList<PersonInfo>();
         try {
             personInfos = new ApiTestInfo().GetPersonInfo(randomCount);
+            new Mysql().InsertPersonInfo(personInfos);
         } catch (IOException e) {
             System.out.println(e.getMessage());
             personInfos = new Mysql().GetPersonInfo(randomCount);

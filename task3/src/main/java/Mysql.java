@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Mysql {
     // JDBC URL, username and password of MySQL server
@@ -55,6 +56,34 @@ public class Mysql {
             try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
         }
         return personInfos;
+    }
+
+    public void InsertPersonInfo (ArrayList<PersonInfo> personInfos) {
+        try {
+            con = DriverManager.getConnection(url, user, password);
+
+            // getting Statement object to execute query
+            stmt = con.createStatement();
+
+            // executing SELECT query
+
+            for (Iterator<PersonInfo> i = personInfos.iterator(); i.hasNext();) {
+                PersonInfo person = i.next();
+                String query = "INSERT INTO fintech.testInfo (fname,lname,patronymic,city,street,gender,date,postcode,house,apartment) \n" +
+                        " VALUES (" + "'" + person.getFName() + "', " + "'" + person.getLName() + "', " + "'" + person.getPatronymic() + "', " +
+                        "'" + person.getCity() + "', " + "'" + person.getStreet() + "', "  + "'" + person.getSex() + "', " +
+                        "'" + "2010-01-01"  + "', " + "'" + person.getIndex()  + "', " + "'" + person.getHouse() + "', " + "'" + person.getApartment() + "'"+ ");";
+                //System.out.println (query);
+                stmt.executeUpdate(query);
+            }
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+        } finally {
+            //close connection ,stmt and resultset here
+            try { con.close(); } catch(SQLException se) { /*can't do anything */ }
+            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+
+        }
     }
 
 }

@@ -22,10 +22,10 @@ CREATE TABLE `testInfo` (
   `postcode` varchar(100) NOT NULL,
   `house` int(11) NOT NULL,
   `apartment` int(11) NOT NULL,
-  `phone` varchar(100) NOT NULL,
-  `login` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `userpic` varchar(100) NOT NULL,
-  `color` varchar(100) NOT NULL,
+  `phone` varchar(100) NOT NULL DEFAULT '',
+  `login` varchar(100) NOT NULL DEFAULT '',
+  `password` varchar(100) NOT NULL DEFAULT '',
+  `userpic` varchar(100) NOT NULL DEFAULT '',
+  `color` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

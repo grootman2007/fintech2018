@@ -36,12 +36,12 @@ public class ApiTestInfo {
                     content.append(inputLine);
                 }
                 in.close();
-                System.out.println(content);
+                //System.out.println(content);
 
                 Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new GsonUTCDateAdapter()).create();
                 PersonInfo person = new PersonInfo (gson.fromJson(content.toString(), TestInfoFromApi.class));
                 personInfos.add (person);
-                System.out.println(gson.fromJson(content.toString(), PersonInfo.class));
+                //System.out.println(gson.fromJson(content.toString(), PersonInfo.class));
             }
 
         }

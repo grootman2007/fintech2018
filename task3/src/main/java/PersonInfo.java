@@ -72,7 +72,6 @@ class PersonInfo {
         setApartment ();
         setDate();
         setInn ();
-        System.out.println("ssssssssssssssssssssssssssssss");
     }
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -99,7 +98,7 @@ class PersonInfo {
 
 
     public PersonInfo (TestInfoFromApi testInfoFromApi) throws IOException {
-        if (testInfoFromApi.getGender() == "w") {
+        if (testInfoFromApi.getGender() == "w" || testInfoFromApi.getGender() == "Ж") {
             this.sex = "Ж";
         } else {
             this.sex = "М";
