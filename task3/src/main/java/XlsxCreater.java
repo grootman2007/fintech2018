@@ -52,21 +52,21 @@ public class XlsxCreater {
 
         Cell name = row.createCell(cell_i);
         cell_i++;
-        name.setCellValue(person.name);
+        name.setCellValue(person.getFName());
 
         Cell fname = row.createCell(cell_i);
         cell_i++;
-        fname.setCellValue(person.fname);
+        fname.setCellValue(person.getLName());
 
         Cell patronymic = row.createCell(cell_i);
         cell_i++;
-        patronymic.setCellValue(person.patronymic);
+        patronymic.setCellValue(person.getPatronymic());
 
 
         LocalDate nowDate = LocalDate.now();
 
-        Period diff = Period.between(LocalDate.of(person.date.getYear()+1900,
-                person.date.getMonth()+1,person.date.getDay()+1), nowDate);
+        Period diff = Period.between(LocalDate.of(person.getDate().getYear()+1900,
+                person.getDate().getMonth()+1,person.getDate().getDay()+1), nowDate);
 
 
         Cell age = row.createCell(cell_i);
@@ -76,7 +76,7 @@ public class XlsxCreater {
 
         Cell sex = row.createCell(cell_i);
         cell_i++;
-        sex.setCellValue(person.sex);
+        sex.setCellValue(person.getSex());
 
         Cell birthdate = row.createCell(cell_i);
         cell_i++;
@@ -84,39 +84,39 @@ public class XlsxCreater {
         CellStyle dateStyle = __book.createCellStyle();
         dateStyle.setDataFormat(format.getFormat("dd-mm-yyyy"));
         birthdate.setCellStyle(dateStyle);
-        birthdate.setCellValue(person.date);
+        birthdate.setCellValue(person.getDate());
 
         Cell inn = row.createCell(cell_i);
         cell_i++;
-        inn.setCellValue(person.inn);
+        inn.setCellValue(person.getInn());
 
         Cell index = row.createCell(cell_i);
         cell_i++;
-        index.setCellValue(person.index);
+        index.setCellValue(person.getIndex());
 
         Cell country = row.createCell(cell_i);
         cell_i++;
-        country.setCellValue(person.country);
+        country.setCellValue(person.getCountry());
 
         Cell region = row.createCell(cell_i);
         cell_i++;
-        region.setCellValue(person.region);
+        region.setCellValue(person.getRegion());
 
         Cell city = row.createCell(cell_i);
         cell_i++;
-        city.setCellValue(person.city);
+        city.setCellValue(person.getCity());
 
         Cell street = row.createCell(cell_i);
         cell_i++;
-        street.setCellValue(person.street);
+        street.setCellValue(person.getStreet());
 
         Cell house = row.createCell(cell_i);
         cell_i++;
-        house.setCellValue(person.house);
+        house.setCellValue(person.getHouse());
 
         Cell apartment = row.createCell(cell_i);
         cell_i++;
-        apartment.setCellValue(person.apartment);
+        apartment.setCellValue(person.getApartment());
 
 
 

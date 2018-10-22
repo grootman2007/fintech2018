@@ -74,39 +74,39 @@ public class PdfCreater {
     }
 
     public void addRow (PersonInfo person) {
-        __table.addCell(new Phrase(person.name, __rusFont));
+        __table.addCell(new Phrase(person.getFName(), __rusFont));
 
-        __table.addCell(new Phrase(person.fname, __rusFont));
+        __table.addCell(new Phrase(person.getLName(), __rusFont));
 
-        __table.addCell(new Phrase(person.patronymic, __rusFont));
+        __table.addCell(new Phrase(person.getPatronymic(), __rusFont));
 
         LocalDate nowDate = LocalDate.now();
 
-        Period diff = Period.between(LocalDate.of(person.date.getYear()+1900,
-                person.date.getMonth()+1,person.date.getDay()+1), nowDate);
+        Period diff = Period.between(LocalDate.of(person.getDate().getYear()+1900,
+                person.getDate().getMonth()+1,person.getDate().getDay()+1), nowDate);
 
         __table.addCell(new Phrase(Integer.toString (diff.getYears()) , __rusFont));
 
-        __table.addCell(new Phrase(person.sex, __rusFont));
+        __table.addCell(new Phrase(person.getSex(), __rusFont));
 
         Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-        __table.addCell(new Phrase(formatter.format(person.date), __rusFont));
+        __table.addCell(new Phrase(formatter.format(person.getDate()), __rusFont));
 
-        __table.addCell(new Phrase(person.inn, __rusFont));
+        __table.addCell(new Phrase(person.getInn(), __rusFont));
 
-        __table.addCell(new Phrase(Integer.toString(person.index), __rusFont));
+        __table.addCell(new Phrase(Integer.toString(person.getIndex()), __rusFont));
 
-        __table.addCell(new Phrase(person.country, __rusFont));
+        __table.addCell(new Phrase(person.getCountry(), __rusFont));
 
-        __table.addCell(new Phrase(person.region, __rusFont));
+        __table.addCell(new Phrase(person.getRegion(), __rusFont));
 
-        __table.addCell(new Phrase(person.city, __rusFont));
+        __table.addCell(new Phrase(person.getCity(), __rusFont));
 
-        __table.addCell(new Phrase(person.street, __rusFont));
+        __table.addCell(new Phrase(person.getStreet(), __rusFont));
 
-        __table.addCell(new Phrase(Integer.toString(person.house), __rusFont));
+        __table.addCell(new Phrase(Integer.toString(person.getHouse()), __rusFont));
 
-        __table.addCell(new Phrase(Integer.toString(person.apartment), __rusFont));
+        __table.addCell(new Phrase(Integer.toString(person.getApartment()), __rusFont));
 
     }
 

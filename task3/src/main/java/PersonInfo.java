@@ -4,20 +4,59 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 class PersonInfo {
-    public String name;
-    public String fname;
-    public String patronymic;
-    public String city;
-    public String country;
-    public String region;
-    public String sex;
-    public String street;
-    public Date date;
-    public int index;
-    public String inn;
-    public int house;
-    public int apartment;
+    private String fname;
+    private String lname;
+    private String patronymic;
+    private String city;
+    private String country;
+    private String region;
+    private String sex;
+    private String street;
+    private Date date;
+    private int index;
+    private String inn;
+    private int house;
+    private int apartment;
 
+    public String getFName () {
+        return this.fname;
+    }
+    public String getLName () {
+        return this.lname;
+    }
+    public String getPatronymic () {
+        return this.patronymic;
+    }
+    public String getCity () {
+        return this.city;
+    }
+    public String getCountry () {
+        return this.country;
+    }
+    public String getRegion () {
+        return this.region;
+    }
+    public String getSex () {
+        return this.sex;
+    }
+    public String getStreet () {
+        return this.street;
+    }
+    public Date getDate () {
+        return this.date;
+    }
+    public int getIndex () {
+        return this.index;
+    }
+    public String getInn () {
+        return this.inn;
+    }
+    public int getHouse () {
+        return this.house;
+    }
+    public int getApartment () {
+        return this.apartment;
+    }
 
     public PersonInfo () throws IOException {
         setSex ();
@@ -33,6 +72,52 @@ class PersonInfo {
         setApartment ();
         setDate();
         setInn ();
+        System.out.println("ssssssssssssssssssssssssssssss");
+    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PersonInfo that = (PersonInfo) o;
+
+        if (fname != that.fname) return false;
+        if (lname != that.lname) return false;
+        if (patronymic != that.patronymic) return false;
+        if (city != that.city) return false;
+        if (country != that.country) return false;
+        if (region != that.region) return false;
+        if (sex != that.sex) return false;
+        if (street != that.street) return false;
+        if (date != that.date) return false;
+        if (index != that.index) return false;
+        if (inn != that.inn) return false;
+        if (house != that.house) return false;
+        if (apartment != that.apartment) return false;
+
+        return true;
+    }
+
+
+    public PersonInfo (TestInfoFromApi testInfoFromApi) throws IOException {
+        if (testInfoFromApi.getGender() == "w") {
+            this.sex = "Ж";
+        } else {
+            this.sex = "М";
+        }
+        this.fname = testInfoFromApi.getFName();
+        this.lname = testInfoFromApi.getLName();
+        this.patronymic = testInfoFromApi.getPatronymic();
+        this.index = Integer.parseInt(testInfoFromApi.getPostcode());
+        this.city = testInfoFromApi.getCity();
+        this.street = testInfoFromApi.getStreet();
+        this.house = testInfoFromApi.getHouse();
+        this.apartment = testInfoFromApi.getApartment();
+
+        setRegion();
+        setCountry ();
+        setDate();
+        setInn ();
+        System.out.println("ssssssssssssssssssssssssssssss");
     }
 
     private void setSex () {
@@ -55,7 +140,7 @@ class PersonInfo {
         }
 
         int rand = getRandomNumber (names.size());
-        name = names.get(rand);
+        fname = names.get(rand);
     }
 
     private void setFamilyName () {
@@ -69,7 +154,7 @@ class PersonInfo {
         }
 
         int rand = getRandomNumber (names.size());
-        fname = names.get(rand);
+        lname = names.get(rand);
     }
 
     private void setPatronymic () {
@@ -135,7 +220,7 @@ class PersonInfo {
 
     private void setDate () {
 
-        date = new Date(getRandomNumber (118), getRandomNumber (12), getRandomNumber (31));
+        this.date = new Date(getRandomNumber (118), getRandomNumber (12), getRandomNumber (31));
     }
 
     private void setInn () {
@@ -204,5 +289,13 @@ class PersonInfo {
 
         return result;
 
+    }
+    public String toString() {
+        return "SimplePojo{" +
+                "firstName='" + fname + '\'' +
+                ", lastName='" + lname + '\'' +
+                ", age=" + date +
+                ", gender=" + sex +
+                '}';
     }
 }
